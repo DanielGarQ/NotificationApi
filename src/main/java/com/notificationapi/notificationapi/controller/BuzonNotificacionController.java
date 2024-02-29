@@ -18,7 +18,7 @@ import java.util.UUID;
 public class BuzonNotificacionController {
 
     @Autowired
-    private BuzonNotificacionService buzonNotificacionController;
+    private BuzonNotificacionService buzonNotificacionService;
 
     @GetMapping("/BuzonNotificacion")
     public List<BuzonNotificacionDomain> get(@RequestParam(required = true) String nombre){return null;}
