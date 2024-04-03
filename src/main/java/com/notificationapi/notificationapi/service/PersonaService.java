@@ -42,6 +42,9 @@ public class PersonaService {
         if(!datosSonValidos(persona)){
             throw new NotificationException();
         }
+        if(!UtilEmail.isValidEMail(persona.getCorreoElectronico())){
+            throw new NotificationException();
+        }
         try {
             personaRepository.save(toEntity(persona));
         }catch (Exception e){
