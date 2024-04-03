@@ -39,10 +39,12 @@ public class UsuarioService {
         if(!datosSonValidos(usuario)){
             throw new NotificationException();
         }
+        if(!UtilEmail.isValidEMail(usuario.getCorreoElectronico())){
+            throw new NotificationException();
+        }
         try{
             usuarioRepository.save(toEntity(usuario));
         }catch (Exception e){
-            System.out.println("Entra aqui?");
             throw e;
         }
 

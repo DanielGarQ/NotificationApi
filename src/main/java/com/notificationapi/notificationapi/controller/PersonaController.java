@@ -43,7 +43,7 @@ public class PersonaController {
             var response = new ResponseEntity<>("Usuario Registrado con exito", HttpStatus.OK);
             return response;
         }catch (NotificationException n){
-            var response = new ResponseEntity<>("Error, debe ingresar primer nombre y primer apellido obligatoriamente", HttpStatus.BAD_REQUEST);
+            var response = new ResponseEntity<>("Error, debe ingresar primer nombre y primer apellido obligatoriamente O el correo electrónico no tiene un formato válido", HttpStatus.BAD_REQUEST);
             return response;
         }
         catch (Exception e){
