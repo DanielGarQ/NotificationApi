@@ -1,25 +1,25 @@
 package com.notificationapi.notificationapi.service;
 
+import com.notificationapi.notificationapi.crossCutting.exception.NotificationException;
 import com.notificationapi.notificationapi.domain.UsuarioDomain;
-import com.notificationapi.notificationapi.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import reactor.core.publisher.Mono;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
-    private IUsuarioRepository iUsuarioRepository;
-
+    UsuarioService usuarioService;
     @Autowired
-    private PasswordEncoder bcryptEnconder;
+    PasswordEncoder bcryptEnconder;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UsuarioDomain usuario = iUsuarioRepository.findByCorreoElectronico(username).block();
+        UsuarioDomain usuario = usuarioService.findByCorreoElectronico(username);
 
         if(usuario.equals(null)){
             throw new UsernameNotFoundException("No se encontró ningun usuario con el siguiente nombre: "+ username);
@@ -29,8 +29,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
     }
 
-    public Mono<UsuarioDomain> save(UsuarioDomain UsuarioDomain){
+    public void save(UsuarioDomain UsuarioDomain) throws NotificationException {
         UsuarioDomain.setContraseña(bcryptEnconder.encode(UsuarioDomain.getContraseña()));
-        return iUsuarioRepository.save(UsuarioDomain);
+        usuarioService.save(UsuarioDomain);
     }
 }

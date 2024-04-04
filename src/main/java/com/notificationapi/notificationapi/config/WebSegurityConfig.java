@@ -23,16 +23,16 @@ import org.springframework.stereotype.Service;
 public class WebSegurityConfig  extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    UserDetailsService userDetailsService;
 
     @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    private PasswordEncoder bcryptEncoder;
+    PasswordEncoder bcryptEncoder;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

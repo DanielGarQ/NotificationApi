@@ -13,7 +13,6 @@ public class UsuarioEntity {
     @Column(name = "identificador")
     private UUID identificador;
 
-
     @NotNull
     @Column(name = "correoElectronico",length = 50)
     private String correoElectronico;

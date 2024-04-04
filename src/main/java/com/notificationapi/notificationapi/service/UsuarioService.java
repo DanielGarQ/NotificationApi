@@ -15,10 +15,8 @@ import java.util.UUID;
 
 @Repository
 public class UsuarioService {
-
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
+    UsuarioRepository usuarioRepository;
 
     public List<UsuarioDomain> findAll(){
         return usuarioRepository.findAll().stream().map(new UsuarioService()::toDomain).toList();
@@ -55,8 +53,10 @@ public class UsuarioService {
         if(contraseña.equals(UtilText.getDefaultTextValue())){
             throw new NotificationException();
         }
+        var usuarioEntity = usuarioRepository.findByCorreoElectronico(correoElectronico);
+        usuarioEntity.setContraseña(contraseña);
         try {
-            usuarioRepository.updateByCorreoElectronico(contraseña, correoElectronico);
+            usuarioRepository.save(usuarioEntity);
         }catch (Exception e){
             throw e;
         }
@@ -81,5 +81,9 @@ public class UsuarioService {
             return false;
         }
         return true;
+    }
+
+    public UsuarioDomain findByCorreoElectronico(String username) {
+        return toDomain(usuarioRepository.findByCorreoElectronico(username));
     }
 }

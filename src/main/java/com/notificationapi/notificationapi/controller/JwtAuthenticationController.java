@@ -6,6 +6,7 @@ import com.notificationapi.notificationapi.model.JwtRequest;
 import com.notificationapi.notificationapi.model.JwtResponse;
 import com.notificationapi.notificationapi.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import reactor.core.publisher.Mono;
 
 import java.util.Objects;
 
@@ -51,8 +51,14 @@ public class JwtAuthenticationController {
     }
 
     @PostMapping("/register")
-    public Mono<UsuarioDomain> saveUser(@RequestBody UsuarioDomain user)  {
-        return userDetailsService.save(user);
+    public ResponseEntity<Boolean> saveUser(@RequestBody UsuarioDomain user)  {
+        try {
+            userDetailsService.save(user);
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
+        }
     }
 
     private void authenticate(String username, String password) throws Exception {
