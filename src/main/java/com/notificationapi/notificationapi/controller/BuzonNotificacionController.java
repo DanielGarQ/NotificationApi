@@ -27,34 +27,22 @@ public class BuzonNotificacionController {
         return new BuzonNotificacionDomain();
     }
 
-    @GetMapping("/buzonnotificacion/propietario")
-    public List<BuzonNotificacionDomain> getPorPropietario(@RequestParam(required = true) String correo){
-        buzonNotificacionService.getBuzonNotificacionesPorPropietario(correo);
-        return null;
-    }
-    @GetMapping("/buzonnotificacion/id")
-    public List<BuzonNotificacionDomain> getPorId(@RequestParam(required = true) UUID identificador){
-        buzonNotificacionService.findById(identificador);
-        return null;
-    }
-    @GetMapping("/buzonnotificacion_all")
-    public List<BuzonNotificacionDomain> getAll(){
-        buzonNotificacionService.findAll();
-        return null;
-    }
-
-
+    @GetMapping("/buzonnotificacion")
+    public List<BuzonNotificacionDomain> get(@RequestParam(required = true) String nombre){return new ArrayList<>();}
 
     @PostMapping("/buzonnotificacion")
-    public ResponseEntity<String> create(@Validated @RequestBody BuzonNotificacionDomain buzonNotificacion){
-        buzonNotificacionService.saveBuzonNotificacion(buzonNotificacion);
-        return new ResponseEntity<>("", HttpStatus.OK);
+    public ResponseEntity<UUID> create(@Validated @RequestBody BuzonNotificacionDomain buzonNotificacion){
+        return new ResponseEntity<>(buzonNotificacionService.saveBuzonNotificacion(buzonNotificacion), HttpStatus.OK);
+    }
+
+    @PutMapping("/buzonnotificacion")
+    public List<ResponseEntity<BuzonNotificacionDomain>> update(@RequestParam(required = true) String persona,@Validated @RequestBody BuzonNotificacionDomain nombre){
+        return new ArrayList<>();
     }
 
     @DeleteMapping("/buzonnotificacion")
     public List<ResponseEntity<BuzonNotificacionDomain>> delete(@RequestParam(required = true) UUID identificador){
-        buzonNotificacionService.eliminar(identificador);
-        return null;
+        return new ArrayList<>();
     }
 
 }
