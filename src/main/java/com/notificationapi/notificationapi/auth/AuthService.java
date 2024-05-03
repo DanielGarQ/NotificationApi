@@ -49,7 +49,7 @@ public class AuthService {
         UsuarioEntity usuario = UsuarioEntity.builder().correoElectronico(request.getCorreoElectronico()).
                 password(passwordEncoder.encode((request.getPassword()))).rol(Rol.USER).build();
 
-        PersonaEntity persona = PersonaEntity.builder().primerApellido(request.primerApellido).segundoNombre(request.segundoNombre).
+        PersonaEntity persona = PersonaEntity.builder().primerNombre(request.primerNombre).segundoNombre(request.segundoNombre).
                 primerApellido(request.primerApellido).segundoApellido(request.segundoApellido).correoElectronico(request.correoElectronico).build();
         personaRepository.save(persona);
         usuarioRepository.save(usuario);
